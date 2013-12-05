@@ -84,9 +84,9 @@ namespace :sidekiq do
       within current_path do
         for_each_process do |pid_file, idx|
           if fetch(:sidekiq_cmd)
-            execute fetch(:sidekiq_cmd), "-i #{idx} -P #{pid_file} #{fetch(:sidekiq_options)}"
+            execute :nohup, fetch(:sidekiq_cmd), "-i #{idx} -P #{pid_file} #{fetch(:sidekiq_options)}"
           else
-            execute :bundle, :exec, :sidekiq, "-i #{idx} -P #{pid_file} #{fetch(:sidekiq_options)}"
+            execute :nohup, :bundle, :exec, :sidekiq, "-i #{idx} -P #{pid_file} #{fetch(:sidekiq_options)}"
           end
         end
       end
